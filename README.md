@@ -6,15 +6,9 @@
 Breve descripción: FurniStore es una aplicación para la gestión digital de inventario, ventas y entregas de muebles.
 
 ## Tabla de contenidos
-- Instalación
-- Dependencias
-- Ejecutar localmente
-- Endpoints (OpenAPI / Swagger)
 - Estructura del proyecto
 - Diagrama de contexto, casos de uso, diagrama de clases
-- Estrategia de ramas (GitFlow) y convenciones de commits
-- Cómo ejecutar tests y generar reporte de cobertura (JaCoCo)
-- Requisitos del entorno
+- Ejecutar tests y generar reporte de cobertura (JaCoCo)
 
 
 ### Diagramas
