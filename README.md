@@ -20,14 +20,13 @@ Breve descripción: FurniStore es una aplicación para la gestión digital de in
 ### Diagramas
 
 ## Dagrama de contexto 👤
-![diagram context.png](docs/uml/diagram%20context.png)
+![Contexto.png](docs/uml/Contexto.png)
 
 
 - 👤 **Customer** : Cliente final que consulta el catálogo, compra muebles y realiza pedidos.
 - 🖥️ **FurniStore System** : Sistema central de la aplicación que gestiona productos, pedidos, pagos y comunicación con servicios externos.
 - 🔗 **Sistemas externos** :
-    - **Payment Gateway**: Procesa los pagos de manera segura.
-    - **Shipping Provider**: Valida la disponibilidad de productos y gestiona reposición de inventario.
+    - **Inventory System**: Valida la disponibilidad de productos y gestiona reposición de inventario.
     - **Supplier System**: Coordina envíos y entregas de pedidos a los clientes.
 
 ## 🗂️ Diagrama de Casos de Uso 
