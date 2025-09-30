@@ -1,0 +1,12 @@
+com\furnistore\furnistore\FurnistoreApplication.class
+com\furnistore\furnistore\model\Supplier.class
+com\furnistore\furnistore\service\ProductService.class
+com\furnistore\furnistore\model\Inventory.class
+com\furnistore\furnistore\model\Customer.class
+com\furnistore\furnistore\service\OrderService.class
+com\furnistore\furnistore\controller\OrderController.class
+com\furnistore\furnistore\model\Product.class
+com\furnistore\furnistore\controller\CustomerController.class
+com\furnistore\furnistore\controller\ProductController.class
+com\furnistore\furnistore\model\Order.class
+com\furnistore\furnistore\service\CustomerService.class

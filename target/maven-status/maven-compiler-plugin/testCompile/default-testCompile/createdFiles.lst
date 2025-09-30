@@ -1,0 +1,17 @@
+com\furnistore\furnistore\controller\OrderControllerTest.class
+com\furnistore\furnistore\model\ProductTest$1.class
+com\furnistore\furnistore\service\CustomerServiceTest.class
+com\furnistore\furnistore\model\SupplierTest$1.class
+com\furnistore\furnistore\controller\CustomerControllerTest.class
+com\furnistore\furnistore\model\SupplierTest.class
+com\furnistore\furnistore\model\ProductTest.class
+com\furnistore\furnistore\FurnistoreApplicationTests.class
+com\furnistore\furnistore\model\InventoryTest.class
+com\furnistore\furnistore\model\OrderTest.class
+com\furnistore\furnistore\service\ProductServiceTest$1.class
+com\furnistore\furnistore\service\OrderServiceTest.class
+com\furnistore\furnistore\service\ProductServiceTest.class
+com\furnistore\furnistore\controller\ProductControllerTest$1.class
+com\furnistore\furnistore\model\CustomerTest.class
+com\furnistore\furnistore\model\OrderTest$1.class
+com\furnistore\furnistore\controller\ProductControllerTest.class
