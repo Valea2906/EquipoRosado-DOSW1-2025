@@ -30,15 +30,6 @@ Breve descripción: FurniStore es una aplicación para la gestión digital de in
     - **Shipping Provider**: Valida la disponibilidad de productos y gestiona reposición de inventario.
     - **Supplier System**: Coordina envíos y entregas de pedidos a los clientes.
 
-Las flechas reflejan los **flujos de información** entre los actores y el sistema:
-- El *Customer* interactúa con *FurniStore System* para navegar el catálogo y realizar compras.
-- El sistema se conecta con los proveedores externos para procesar pagos, coordinar envíos y mantener la disponibilidad de inventario.
-
-👉 Este diagrama permite comprender de forma rápida:
-1. **Los límites del sistema** (qué hace FurniStore y qué delega a terceros).
-2. **Los actores involucrados** (usuarios y servicios externos).
-3. **Las interacciones clave** de alto nivel, sin entrar en detalles técnicos internos.
-
 ## 🗂️ Diagrama de Casos de Uso 
 ![diagram Uso.png](docs/uml/diagram%20Uso.png)
 
