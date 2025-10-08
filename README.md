@@ -92,3 +92,70 @@ Contiene información de contacto y métodos para enviar productos al inventario
 - Todas las clases modelo, servicios y controllers tienen pruebas unitarias con JUnit 5.
 
 ![img.png](docs/img/img.png)
+
+## 🧩 Objetivo de la Semana 2
+
+- Integrar nuevas funcionalidades al sistema e incorporar el módulo de facturación, que permita:
+
+- Generar una factura con los datos del cliente, lista de productos, cantidades y precios unitarios.
+
+- Calcular el subtotal y total de la compra.
+
+    - Aplicar de forma flexible decoradores para:
+
+    - IVA (19%)
+
+    - Descuento (10%)
+
+    - Costos de envío ($25.000)
+
+---
+## 🧠 Patrón aplicado: Decorator
+
+- El patrón Decorator permite agregar funcionalidades adicionales a un objeto de forma flexible y dinámica, sin modificar su estructura original.
+  En este caso, se utiliza para añadir IVA, descuentos y costos de envío a una factura base, sin alterar la clase principal que calcula el subtotal.
+---
+
+### Estado
+- Se añadió un módulo de facturación mínimo en `src/main/java/com/furnistore/furnistore/billing`.
+- Clases: `BaseInvoice`, `InvoiceItem`, `InvoiceComponent`, `InvoiceDecorator`, `TaxDecorator`, `DiscountDecorator`, `ShippingDecorator`, `InvoiceService`.
+- Pruebas unitarias básicas en `src/test/java/com/furnistore/furnistore/billing/InvoiceServiceTest.java`.
+
+## 📊 Diagrama de clases actualizado
+
+![diagram clases actualizado.png](docs/uml/diagram%20clases%20actualizado.png)
+
+#### 🧾 Descripción del Diagrama de Clases - Módulo de Facturación
+
+El diagrama muestra la integración del módulo de facturación al sistema Furniture Store, aplicando el patrón Decorator.
+Las clases principales (Customer, Product, Order, Inventory) representan la base del sistema.
+El módulo de facturación introduce nuevas clases (InvoiceComponent, BaseInvoice, InvoiceDecorator y sus subclases) que permiten agregar de forma flexible funcionalidades adicionales a una factura, como IVA, descuentos y costos de envío, sin modificar la lógica original.
+De esta manera, el sistema mantiene una estructura modular, extensible y coherente con los principios de diseño orientado a objetos.
+
+### Backlog (Historias de usuario)
+- HU-1: Como cliente, quiero recibir una factura con el detalle de mis compras y el total con IVA, para tener claridad en el costo final.
+    - Criterios de aceptación: La factura muestra items, cantidades, subtotal, IVA aplicado y total.
+- HU-2: Como administrador, quiero aplicar descuentos a una factura antes de finalizarla.
+    - Criterios: Se puede aplicar un monto fijo de descuento; total no puede ser negativo.
+- HU-3: Como cliente, quiero que se añada el costo de envío cuando corresponda.
+    - Criterios: El costo de envío se suma al total final.
+
+
+
+## 🗓️ Planeación del Sprint - Semana 2
+
+**Objetivo:** Implementar el módulo de facturación para el sistema Furniture Store, aplicando el patrón **Decorator** para añadir de manera flexible responsabilidades como IVA, descuentos y envío.
+
+### 🔀 Ramas del Sprint
+- `feature/invoice` → Implementación del núcleo de facturación (BaseInvoice, InvoiceItem, etc.)
+- `feature/invoice-decorators` → Decoradores: TaxDecorator, DiscountDecorator, ShippingDecorator.
+- `feature/invoice-service` → Servicio para generar factura desde un pedido (Order → Invoice).
+- `feature/invoice-tests` → Pruebas unitarias de los componentes de facturación.
+- `feature/invoice-docs` → Documentación, diagramas y actualización del README.
+
+- Tareas y estimaciones:
+    - T1: Implementar clases base de factura (4h) 
+    - T2: Implementar decoradores (IVA, descuento, envío) (4h) .
+    - T3: Servicio para generar factura desde Order (3h) 
+    - T4: Pruebas unitarias (3h) .
+    - T5: Actualizar diagramas y README (2h) .
