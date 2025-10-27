@@ -1,51 +1,46 @@
 package com.furnistore.furnistore.service;
 
 import com.furnistore.furnistore.model.Product;
+import com.furnistore.furnistore.repository.ProductRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class ProductService {
 
-    private final List<Product> products = new ArrayList<>();
-    private Long nextId = 1L;
+    private final ProductRepository repository;
 
-    // Crear producto
+    public ProductService(ProductRepository repository) {
+        this.repository = repository;
+    }
+
     public Product addProduct(Product product) {
-        if (product.getId() == null) {
-            product.setId(nextId++);
-        }
-        products.add(product);
-        return product;
+        return repository.save(product);
     }
 
-    // Listar todos los productos
     public List<Product> getAllProducts() {
-        return products;
+        return repository.findAll();
     }
 
-    // Buscar por ID
-    public Product findById(Long id) {
-        return products.stream()
-                .filter(p -> p.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public Optional<Product> findById(Long id) {
+        return repository.findById(id);
     }
 
-    // Buscar por nombre o categoría (para GET /muebles?filtro=)
     public List<Product> findByNameOrCategory(String filtro) {
-        String lower = filtro.toLowerCase();
-        return products.stream()
-                .filter(p -> (p.getName() != null && p.getName().toLowerCase().contains(lower)) ||
-                        (p.getCategory() != null && p.getCategory().toLowerCase().contains(lower)))
-                .collect(Collectors.toList());
+        // Puedes implementar lógica personalizada en el repository si quieres
+        return repository.findAll().stream()
+                .filter(p -> (p.getName() != null && p.getName().toLowerCase().contains(filtro.toLowerCase())) ||
+                        (p.getCategory() != null && p.getCategory().toLowerCase().contains(filtro.toLowerCase())))
+                .toList();
     }
 
-    // Eliminar producto por ID
     public boolean deleteProduct(Long id) {
-        return products.removeIf(p -> p.getId().equals(id));
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

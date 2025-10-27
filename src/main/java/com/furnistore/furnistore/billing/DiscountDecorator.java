@@ -10,8 +10,9 @@ public class DiscountDecorator extends InvoiceDecorator {
 
     @Override
     public String getDescription() {
-        return wrapped.getDescription() + String.format("Descuento (%.2f)\n", discountAmount);
+        return wrapped.getDescription() + String.format(java.util.Locale.US, "Descuento (%.2f)\n", discountAmount);
     }
+
 
     @Override
     public double getTotal() {

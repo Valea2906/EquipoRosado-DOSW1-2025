@@ -1,5 +1,6 @@
 package com.furnistore.furnistore.controller;
 
+import com.furnistore.furnistore.model.FurnitureProduct;
 import com.furnistore.furnistore.model.Product;
 import com.furnistore.furnistore.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,33 +10,32 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/products")
 public class ProductController {
 
     @Autowired
     private ProductService productService;
 
-    // POST /muebles → agregar nuevo producto
-    @PostMapping("/muebles")
-    public ResponseEntity<Product> addProduct(@RequestBody Product product) {
-        Product saved = productService.addProduct(product);
+    @PostMapping
+    public ResponseEntity<FurnitureProduct> addProduct(@RequestBody FurnitureProduct product) {
+        FurnitureProduct saved = (FurnitureProduct) productService.addProduct(product);
         return ResponseEntity.ok(saved);
     }
 
-    // GET /muebles → consultar catálogo con filtro opcional
-    @GetMapping("/muebles")
-    public ResponseEntity<List<Product>> getProducts(@RequestParam(required = false) String filtro) {
-        if (filtro == null || filtro.isEmpty()) {
-            return ResponseEntity.ok(productService.getAllProducts());
-        }
-        return ResponseEntity.ok(productService.findByNameOrCategory(filtro));
+    @GetMapping
+    public ResponseEntity<List<Product>> getProducts() {
+        return ResponseEntity.ok(productService.getAllProducts());
     }
 
-    // GET /muebles/{id} → obtener producto por id
-    @GetMapping("/muebles/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable Long id) {
-        Product found = productService.findById(id);
-        if (found == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(found);
+        return productService.findById(id)
+                .map(ResponseEntity::ok)          // Si existe, devuelve 200 OK con el producto
+                .orElseGet(() -> ResponseEntity.notFound().build()); // Si no, 404
+    }
+    @GetMapping("/search")
+    public ResponseEntity<List<Product>> searchProducts(@RequestParam String filtro) {
+        List<Product> result = productService.findByNameOrCategory(filtro);
+        return ResponseEntity.ok(result);
     }
 }

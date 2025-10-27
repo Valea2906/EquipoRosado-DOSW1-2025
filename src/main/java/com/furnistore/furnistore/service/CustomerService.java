@@ -1,41 +1,38 @@
 package com.furnistore.furnistore.service;
 
 import com.furnistore.furnistore.model.Customer;
+import com.furnistore.furnistore.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CustomerService {
 
-    private final List<Customer> customers = new ArrayList<>();
-    private Long nextId = 1L;
+    private final CustomerRepository repository;
 
-    // Crear nuevo cliente
+    public CustomerService(CustomerRepository repository) {
+        this.repository = repository;
+    }
+
     public Customer addCustomer(Customer customer) {
-        if (customer.getId() == null) {
-            customer.setId(nextId++);
-        }
-        customers.add(customer);
-        return customer;
+        return repository.save(customer);
     }
 
-    // Listar todos los clientes
     public List<Customer> getAllCustomers() {
-        return customers;
+        return repository.findAll();
     }
 
-    // Buscar cliente por ID
-    public Customer findCustomerById(Long id) {
-        return customers.stream()
-                .filter(c -> c.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public Optional<Customer> findCustomerById(Long id) {
+        return repository.findById(id);
     }
 
-    // Eliminar cliente por ID (extra útil para API)
     public boolean deleteCustomer(Long id) {
-        return customers.removeIf(c -> c.getId().equals(id));
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

@@ -9,30 +9,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/orders")
 public class OrderController {
 
     @Autowired
     private OrderService orderService;
 
-    // POST /ordenes → crear orden y factura
-    @PostMapping("/ordenes")
+    @PostMapping
     public ResponseEntity<Order> createOrder(@RequestBody Order order) {
-        Order saved = orderService.addOrder(order);
-        return ResponseEntity.ok(saved);
+        orderService.addOrder(order);
+        return ResponseEntity.ok(order);
     }
 
-    // GET /ordenes → listar todas las órdenes
-    @GetMapping("/ordenes")
+    @GetMapping
     public ResponseEntity<List<Order>> listOrders() {
         return ResponseEntity.ok(orderService.getAllOrders());
     }
 
-    // GET /ordenes/{id} → consultar una orden específica
-    @GetMapping("/ordenes/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
-        Order order = orderService.findOrderById(id);
-        if (order == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(order);
+        return orderService.findOrderById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

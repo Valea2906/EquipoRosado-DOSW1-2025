@@ -1,26 +1,50 @@
 package com.furnistore.furnistore.model;
 
-import static org.junit.jupiter.api.Assertions.*;
+
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 
-class OrderTest {
+class Chair extends Product {
+    public Chair(Long id, String name, String category, String style, Double price, int stockQuantity) {
+        super(id, name, category, style, price, stockQuantity);
+    }
+}
 
-    Customer customer = new Customer(1L, "Ana", "ana@email.com", "3001234567");
-    Product sofa = new Product(1L, "Sofá Clásico", "Sofá", "Clásico", 500.0, 10) {};
-    Order order = new Order(1L, customer);
+public class OrderTest {
 
-    @Test
-    void testAgregarProductoYCalcularTotal() {
-        order.addProduct(sofa, 2);
-        assertEquals(2, order.getProducts().size(), "El pedido debería tener 2 productos");
-        assertEquals(1000.0, order.getTotal(), "El total del pedido debe calcularse correctamente");
-        assertEquals(8, sofa.getStockQuantity(), "El stock del producto debe disminuir correctamente");
+    private Customer customer;
+    private Product product;
+    private Order order;
+
+    @BeforeEach
+    public void setUp() {
+        customer = new Customer(1L, "Carlos Pérez", "carlos@example.com", "3001112233");
+
+        product = new Chair(1L, "Silla ergonómica", "Oficina", "Moderna", 500.0, 10);
+        order = new Order(1L, customer);
     }
 
     @Test
-    void testActualizarEstado() {
-        order.updateStatus("Enviado");
-        assertEquals("Enviado", order.getStatus(), "El estado del pedido debe actualizarse correctamente");
+    public void testAddProductAndCalculateTotal() {
+        order.addProduct(product, 2);
+        assertEquals(1, order.getItems().size());
+        assertEquals(1000.0, order.getTotal());
+        assertEquals(8, product.getStockQuantity());
+    }
+
+    @Test
+    public void testUpdateStatus() {
+        order.updateStatus("Shipped");
+        assertEquals("Shipped", order.getStatus());
+    }
+
+    @Test
+    public void testOrderInitialization() {
+        assertEquals("Pending", order.getStatus());
+        assertEquals(0.0, order.getTotal());
+        assertEquals(customer, order.getCustomer());
+        assertTrue(order.getItems().isEmpty());
     }
 }

@@ -10,8 +10,9 @@ public class ShippingDecorator extends InvoiceDecorator {
 
     @Override
     public String getDescription() {
-        return wrapped.getDescription() + String.format("Costo de envío (%.2f)\n", shippingCost);
+        return wrapped.getDescription() + String.format(java.util.Locale.US, "Costo de envío (%.2f)\n", shippingCost);
     }
+
 
     @Override
     public double getTotal() {

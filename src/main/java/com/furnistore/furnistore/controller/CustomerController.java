@@ -9,31 +9,27 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/api/customers")
 public class CustomerController {
 
     @Autowired
     private CustomerService customerService;
 
-    // POST /clientes → registro de clientes
-    @PostMapping("/clientes")
+    @PostMapping
     public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
-        Customer saved = customerService.addCustomer(customer);
-        return ResponseEntity.ok(saved);
+        customerService.addCustomer(customer);
+        return ResponseEntity.ok(customer);
     }
 
-    // GET /clientes → listar todos los clientes
-    @GetMapping("/clientes")
+    @GetMapping
     public ResponseEntity<List<Customer>> listCustomers() {
-        List<Customer> customers = customerService.getAllCustomers();
-        return ResponseEntity.ok(customers);
+        return ResponseEntity.ok(customerService.getAllCustomers());
     }
 
-    // GET /clientes/{id} → buscar cliente por id
-    @GetMapping("/clientes/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<Customer> findCustomer(@PathVariable Long id) {
-        Customer found = customerService.findCustomerById(id);
-        if (found == null) return ResponseEntity.notFound().build();
-        return ResponseEntity.ok(found);
+        return customerService.findCustomerById(id)
+                .map(ResponseEntity::ok)
+                .orElseGet(() -> ResponseEntity.notFound().build());
     }
 }

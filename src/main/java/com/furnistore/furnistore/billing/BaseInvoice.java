@@ -24,10 +24,14 @@ public class BaseInvoice implements InvoiceComponent {
         StringBuilder sb = new StringBuilder();
         sb.append("Factura para: ").append(customerName).append("\n");
         for (InvoiceItem it : items) {
-            sb.append(it.getDescription()).append(" -> ").append(String.format("%.2f", it.getTotal())).append("\n");
+            sb.append(it.getDescription())
+                    .append(" -> ")
+                    .append(String.format(java.util.Locale.US, "%.2f", it.getTotal()))
+                    .append("\n");
         }
         return sb.toString();
     }
+
 
     @Override
     public double getTotal() {

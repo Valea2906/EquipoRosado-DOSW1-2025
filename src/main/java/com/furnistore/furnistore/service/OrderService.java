@@ -1,41 +1,43 @@
 package com.furnistore.furnistore.service;
 
 import com.furnistore.furnistore.model.Order;
+import com.furnistore.furnistore.model.Customer;
+import com.furnistore.furnistore.repository.OrderRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class OrderService {
 
-    private final List<Order> orders = new ArrayList<>();
-    private Long nextId = 1L;
+    private final OrderRepository repository;
 
-    // Crear orden
+    public OrderService(OrderRepository repository) {
+        this.repository = repository;
+    }
+
     public Order addOrder(Order order) {
-        if (order.getId() == null) {
-            order.setId(nextId++);
-        }
-        orders.add(order);
-        return order;
+        return repository.save(order);
     }
 
-    // Listar todas las órdenes
     public List<Order> getAllOrders() {
-        return orders;
+        return repository.findAll();
     }
 
-    // Buscar por ID
-    public Order findOrderById(Long id) {
-        return orders.stream()
-                .filter(o -> o.getId().equals(id))
-                .findFirst()
-                .orElse(null);
+    public Optional<Order> findOrderById(Long id) {
+        return repository.findById(id);
     }
 
-    // Eliminar orden (opcional)
+    public List<Order> findOrdersByCustomer(Customer customer) {
+        return repository.findByCustomer(customer);
+    }
+
     public boolean deleteOrder(Long id) {
-        return orders.removeIf(o -> o.getId().equals(id));
+        if (repository.existsById(id)) {
+            repository.deleteById(id);
+            return true;
+        }
+        return false;
     }
 }

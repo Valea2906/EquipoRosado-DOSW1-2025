@@ -159,3 +159,9 @@ De esta manera, el sistema mantiene una estructura modular, extensible y coheren
     - T3: Servicio para generar factura desde Order (3h) 
     - T4: Pruebas unitarias (3h) .
     - T5: Actualizar diagramas y README (2h) .
+
+
+
+
+![Swagger.png](docs/img/Swagger.png)
+![JACOCO.png](docs/img/JACOCO.png)

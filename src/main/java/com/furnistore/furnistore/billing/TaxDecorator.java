@@ -10,7 +10,7 @@ public class TaxDecorator extends InvoiceDecorator {
 
     @Override
     public String getDescription() {
-        return wrapped.getDescription() + String.format("IVA (%.2f%%)\n", taxRate*100);
+        return wrapped.getDescription() + String.format(java.util.Locale.US, "IVA (%.2f%%)\n", taxRate * 100);
     }
 
     @Override
