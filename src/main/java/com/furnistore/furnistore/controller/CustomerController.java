@@ -1,21 +1,39 @@
 package com.furnistore.furnistore.controller;
 
-
 import com.furnistore.furnistore.model.Customer;
 import com.furnistore.furnistore.service.CustomerService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
 public class CustomerController {
 
-    private CustomerService customerService = new CustomerService();
+    @Autowired
+    private CustomerService customerService;
 
-    public void addCustomer(Customer customer) {
-        customerService.addCustomer(customer);
+    // POST /clientes → registro de clientes
+    @PostMapping("/clientes")
+    public ResponseEntity<Customer> createCustomer(@RequestBody Customer customer) {
+        Customer saved = customerService.addCustomer(customer);
+        return ResponseEntity.ok(saved);
     }
 
+    // GET /clientes → listar todos los clientes
+    @GetMapping("/clientes")
+    public ResponseEntity<List<Customer>> listCustomers() {
+        List<Customer> customers = customerService.getAllCustomers();
+        return ResponseEntity.ok(customers);
+    }
 
-    public void listCustomers() {
-        customerService.getAllCustomers().forEach(c ->
-                System.out.println("Customer: " + c.getName() + ", Email: " + c.getEmail())
-        );
+    // GET /clientes/{id} → buscar cliente por id
+    @GetMapping("/clientes/{id}")
+    public ResponseEntity<Customer> findCustomer(@PathVariable Long id) {
+        Customer found = customerService.findCustomerById(id);
+        if (found == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(found);
     }
 }

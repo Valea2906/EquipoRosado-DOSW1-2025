@@ -1,20 +1,38 @@
 package com.furnistore.furnistore.controller;
 
-
 import com.furnistore.furnistore.model.Order;
 import com.furnistore.furnistore.service.OrderService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
+@RestController
+@RequestMapping("/api")
 public class OrderController {
 
-    private OrderService orderService = new OrderService();
+    @Autowired
+    private OrderService orderService;
 
-    public void addOrder(Order order) {
-        orderService.addOrder(order);
-
+    // POST /ordenes → crear orden y factura
+    @PostMapping("/ordenes")
+    public ResponseEntity<Order> createOrder(@RequestBody Order order) {
+        Order saved = orderService.addOrder(order);
+        return ResponseEntity.ok(saved);
     }
-    public void listOrders() {
-        orderService.getAllOrders().forEach(o ->
-                System.out.println("Order: " + o.getId() + ", Customer: " + o.getCustomer().getName() + ", Total: " + o.getTotal())
-        );
+
+    // GET /ordenes → listar todas las órdenes
+    @GetMapping("/ordenes")
+    public ResponseEntity<List<Order>> listOrders() {
+        return ResponseEntity.ok(orderService.getAllOrders());
+    }
+
+    // GET /ordenes/{id} → consultar una orden específica
+    @GetMapping("/ordenes/{id}")
+    public ResponseEntity<Order> getOrderById(@PathVariable Long id) {
+        Order order = orderService.findOrderById(id);
+        if (order == null) return ResponseEntity.notFound().build();
+        return ResponseEntity.ok(order);
     }
 }
