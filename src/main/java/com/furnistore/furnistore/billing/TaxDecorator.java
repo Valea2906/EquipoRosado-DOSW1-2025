@@ -1,7 +1,7 @@
 package com.furnistore.furnistore.billing;
 
 public class TaxDecorator extends InvoiceDecorator {
-    private double taxRate; // e.g., 0.19 for 19%
+    private double taxRate;
 
     public TaxDecorator(InvoiceComponent wrapped, double taxRate) {
         super(wrapped);

@@ -1,8 +1,7 @@
 package com.furnistore.furnistore.billing;
 
 public class DiscountDecorator extends InvoiceDecorator {
-    private double discountAmount; // absolute amount to subtract
-
+    private double discountAmount;
     public DiscountDecorator(InvoiceComponent wrapped, double discountAmount) {
         super(wrapped);
         this.discountAmount = discountAmount;
